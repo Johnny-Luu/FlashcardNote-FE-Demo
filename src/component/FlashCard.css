@@ -1,0 +1,33 @@
+.flash-card {
+     width: 250px;
+     background-color: rgb(191, 122, 255);
+     border-radius: 10px;
+     text-align: left;
+     padding: 5px 20px;
+     margin: 20px;
+}
+
+.title {
+     font-size: 24px;
+     font-family: 'Roboto', sans-serif;
+     font-weight: 500;
+     margin-top: 15px;
+     margin-bottom: 10px;
+     overflow-wrap: break-word;
+}
+
+.description {
+     font-size: 14px;
+     font-family: 'Roboto', sans-serif;
+     font-weight: 300;
+     overflow-wrap: break-word;
+}
+
+.time {
+     font-size: 14px;
+     font-family: 'Roboto', sans-serif;
+     font-weight: 400;
+     margin-top: 10px;
+     margin-bottom: 10px;
+     text-align: right;
+}
