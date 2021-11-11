@@ -1,24 +1,48 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
 import FlashCard from './component/FlashCard';
-
-const data = {
-  title: 'Some Title',
-  description: 'Some Description',
-  time: 'Some time'
-}
 
 function App() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/get')
+      .then(res => {
+        setCards(res.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   const handleCreate = () => {
-    console.log(title, description);
-  }
+    if (title.length === 0 || description.length === 0) {
+      alert('Please fill in all fields');
+    } else {
+      Axios.post('http://localhost:3001/api/create', {
+        title: title,
+        description: description,
+        time: getTime(),
+      }).then(() => {
+        alert('Flashcard created');
+        setTitle('');
+        setDescription('');
+      })
+    }
+  };
 
   const handleClear = () => {
     setTitle('');
     setDescription('');
+  }
+
+  const getTime = () => {
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = time + ' ' + date;
+    return dateTime;
   }
 
   return (
@@ -49,7 +73,9 @@ function App() {
       </div>
 
       <div className="today-note-container">
-        <FlashCard data={data}/>
+          {cards.map((card, index) => {
+            return <FlashCard key={index} data={card} />
+          })}
       </div>
     </div>
   );
